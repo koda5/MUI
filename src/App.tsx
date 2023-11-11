@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import PersistentDrawerRight from "./Components/PersistentDrawerRight";
+import { Button } from "@mui/material";
+import { EditorState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function App() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+
+  const handleToggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
+  const handleDrawerClose = () => {
+    setIsDrawerOpen(false);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">Rich Text Editor Example</header>
+
+      <Editor editorState={editorState} onEditorStateChange={setEditorState} />
+      {/* <Button
+        sx={{ ml: 3, mr: 2, mt: 3.5, zIndex: 9999 }}
+        variant="contained"
+        color="success"
+        size="small"
+        onClick={handleToggleDrawer}
+      >
+        Side bar
+      </Button>
+      {isDrawerOpen && (
+        <PersistentDrawerRight
+          open={isDrawerOpen}
+          handleDrawerClose={handleDrawerClose}
+        />
+      )} */}
     </div>
   );
 }
